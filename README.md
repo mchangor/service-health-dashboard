@@ -32,4 +32,6 @@ Caution: The page will reload if any edit is made to the code.
 
 Run ``npm run build``  
 Builds the app for production to the ``build`` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It can then be served with a static server:
+  ``npm install -g serve``  
+  ``serve -s build`` 
