@@ -25,11 +25,12 @@ class AddServiceForm extends Component {
     };
 
     buildServiceDetailsObjectAndSubmit = async(event) => {
+        // Build service details object with service name and url
         const serviceDetails = this.state.ServiceDetails;
-        serviceDetails.name = this.state.serviceName;
+        serviceDetails.name = this.state.name;
         serviceDetails.url = this.state.url;
         event.preventDefault();
-
+        // POST the service
         try {
             await axios({
                 method: "post",
@@ -40,8 +41,6 @@ class AddServiceForm extends Component {
                     'Content-Type': 'application/json',
                 },
             }).then(response => {
-                console.log("Add service response: ", response);
-                console.log("Add service response data: ", response.data);
                 this.setState({message: response.data});
             });
         } catch (error) {
@@ -51,6 +50,7 @@ class AddServiceForm extends Component {
     }
 
     resetForm = event => {
+        // Reset the form when reset button is clicked
         event.currentTarget.form.reset();
         this.setState(initialState);
     };
@@ -61,7 +61,7 @@ class AddServiceForm extends Component {
             <div className="wrapper">
                 <form onSubmit={this.buildServiceDetailsObjectAndSubmit.bind(this)}>
                     <div className="form-wrapper">
-                        <TextField label="Service Name" onChange={this.handleChange('serviceName')} className={"field"}
+                        <TextField label="Service Name" onChange={this.handleChange('name')} className={"field"}
                                    required={true}/>
                         <TextField label="URL" onChange={this.handleChange('url')} className={"field"}
                                    helperText={"URL to get service health"} required={true}/>

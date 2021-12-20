@@ -140,7 +140,7 @@ export default function EnhancedTable() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('unitName');
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -166,6 +166,13 @@ export default function EnhancedTable() {
     const [rows, setData] = useState([]);
 
     useEffect(() => {
+        // API call to first populate the services when the table is loaded
+        fetch("http://localhost:8080/all")
+            .then(resp => resp.json())
+            .then(resp => {
+                setData(resp)
+        });
+
         // setInterval helps schedule updation every 30 seconds
         const intervalId = setInterval(() => {
             fetch("http://localhost:8080/all")
@@ -174,7 +181,8 @@ export default function EnhancedTable() {
                 setData(resp)
             });
         }, 30000);
-      // This will clear the interval and prevent memory leaks
+
+        // This will clear the interval and prevent memory leaks
         return () => clearInterval(intervalId);
       }, []);
 
